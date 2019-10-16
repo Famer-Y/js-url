@@ -5,7 +5,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     global.JsUrl = factory(global)
-}(typeof window !== "undefined" ? window : this, (function (window) {
+}("undefined" !== typeof window ? window : this, (function (window) {
     'use strict';
 
     function urlRegExp() {
@@ -102,7 +102,7 @@
         url = (url || window.location).toString();
         url = decodeURIComponent(url);
         if (!isURL(url)) {
-            console.debug('[%s] is an invalid url.', url);
+            console.warn('[%s] is an invalid url.', url);
             url = "";
         }
 
