@@ -81,7 +81,7 @@
             .replace(new RegExp(regexp(hash(url)) + '$'), '')
             .replace(new RegExp(regexp(search(url)) + '$'), '');
         var matches = url.match(/(?<=\/\/[^\/]+)\/.+$/);
-        return !!matches ? matches[0] : '/';
+        return  !!url ? (!!matches ? matches[0] : '/') : '';
     }
 
     function port(url) {
@@ -102,6 +102,7 @@
         url = decodeURIComponent(url);
         if (!isURL(url)) {
             console.debug('[%s] is an invalid url.', url);
+            url = "";
         }
 
         return {
