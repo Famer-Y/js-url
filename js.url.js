@@ -4,7 +4,7 @@
 ;(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
-    global.url = factory(global)
+    global.JsUrl = factory(global)
 }(typeof window !== "undefined" ? window : this, (function (window) {
     'use strict';
 
