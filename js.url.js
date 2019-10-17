@@ -100,7 +100,7 @@
 
     function url(url) {
         url = (url || window.location).toString();
-        url = decodeURIComponent(url);
+        url = decodeURIComponent(encodeURIComponent(url));
         if (!isURL(url)) {
             console.warn('[%s] is an invalid url.', url);
             url = "";
