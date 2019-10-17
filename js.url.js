@@ -43,17 +43,14 @@
     }
 
     function host(url) {
-        var pl = protocol(url);
-        url = origin(url);
-        url = url
-            .replace(new RegExp('^' + regexp(pl)), '')
+        url = origin(url)
+            .replace(new RegExp('^' + regexp(protocol(url))), '')
             .replace(/^\/\//, '');
         return url;
     }
 
     function hostname(url) {
-        url = host(url);
-        url = url
+        url = host(url)
             .replace(new RegExp(':' + regexp(port(url)) + '$'), '');
         return url;
     }
