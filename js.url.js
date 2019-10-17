@@ -43,9 +43,10 @@
     }
 
     function host(url) {
+        var pl = protocol(url);
         url = origin(url);
         url = url
-            .replace(new RegExp('^' + regexp(protocol(url))), '')
+            .replace(new RegExp('^' + regexp(pl)), '')
             .replace(/^\/\//, '');
         return url;
     }
@@ -80,7 +81,7 @@
         url = url
             .replace(new RegExp(regexp(hash(url)) + '$'), '')
             .replace(new RegExp(regexp(search(url)) + '$'), '');
-        var matches = url.match(/(?<=\/\/[^\/]+)\/.+$/);
+        var matches = url.match(/(?<=\/\/.*?)\/.+$/);
         return  !!url ? (!!matches ? matches[0] : '/') : '';
     }
 
