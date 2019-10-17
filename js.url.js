@@ -58,7 +58,7 @@
     }
 
     function hash(url) {
-        var matches = url.match(/#.*$/);
+        var matches = url.match(/#(?:[^\&]+)$/);
         return !!matches ? matches[0] : '';
     }
 
