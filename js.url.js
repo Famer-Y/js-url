@@ -37,22 +37,19 @@
     }
 
     function domain(url) {
-        url = sub(url);
-        var matches = suffixRegExp().exec(url);
+        var matches = suffixRegExp().exec(sub(url));
         return !!matches ? (matches[1] + matches[2]) : '';
     }
 
     function host(url) {
-        url = origin(url);
-        url = url
+        url = origin(url)
             .replace(new RegExp('^' + regexp(protocol(url))), '')
             .replace(/^\/\//, '');
         return url;
     }
 
     function hostname(url) {
-        url = host(url);
-        url = url
+        url = host(url)
             .replace(new RegExp(':' + regexp(port(url)) + '$'), '');
         return url;
     }
@@ -71,22 +68,23 @@
     }
 
     function search(url) {
-        url = url.replace(new RegExp(regexp(hash(url)) + '$'), '');
-        var matches = url.match(/\?.*/);
+        var matches = url
+            .replace(new RegExp(regexp(hash(url)) + '$'), '')
+            .match(/\?.*/);
         return !!matches ? matches[0] : '';
     }
 
     function pathname(url) {
-        url = url
+        var matches = url
             .replace(new RegExp(regexp(hash(url)) + '$'), '')
-            .replace(new RegExp(regexp(search(url)) + '$'), '');
-        var matches = url.match(/(?<=\/\/[^\/]+)\/.+$/);
+            .replace(new RegExp(regexp(search(url)) + '$'), '')
+            .match(/(?<=\/\/[^\/]+)\/.+$/);
         return  !!url ? (!!matches ? matches[0] : '/') : '';
     }
 
     function port(url) {
-        url = host(url);
-        var matches = url.match(/:([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/);
+        var matches = host(url)
+                    .match(/:([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/);
         return !!matches ? matches[1] : '';
     }
 
