@@ -106,16 +106,16 @@
 
         return {
             url,
-            sub,
-            hash,
-            host,
-            port,
-            domain,
-            search,
-            origin,
-            hostname,
-            pathname,
-            protocol
+            sub: sub(),
+            hash: hash(),
+            host: host(),
+            port: port(),
+            domain: domain(),
+            search: search(),
+            origin: origin(),
+            hostname: hostname(),
+            pathname: pathname(),
+            protocol: protocol()
         }
     }
 
