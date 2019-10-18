@@ -1,5 +1,7 @@
 /**
- * github : https://github.com/Famer-Y/js-url
+ * version : 1.0.2
+ * author  : Famer-Y
+ * github  : https://github.com/Famer-Y/js-url
  */
 ;(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -7,7 +9,7 @@
     global.JsUrl = factory(global)
 }("undefined" !== typeof window ? window : this, (function (window) {
     'use strict';
-
+    var url;
     function urlRegExp() {
         return /((([A-Za-z]{3,}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-\/]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
     }
@@ -25,66 +27,65 @@
         return new RegExp('([^\.]*)(' + suffixes.join('|') + ')$', 'mi')
     }
 
-    function protocol(url) {
+    function protocol() {
         var matches = url.match(/^[A-Za-z\-]{3,}:(?=(\/\/|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-\/])/);
         return !!matches ? matches[0] : '';
     }
 
-    function sub(url) {
-        url = hostname(url)
+    function sub() {
+        var u = hostname()
             .replace(/^w{3,3}\./, '');
-        return url;
+        return u;
     }
 
-    function domain(url) {
-        url = sub(url);
-        var matches = suffixRegExp().exec(url);
+    function domain() {
+        var matches = suffixRegExp().exec(sub());
         return !!matches ? (matches[1] + matches[2]) : '';
     }
 
-    function host(url) {
-        url = origin(url)
-            .replace(new RegExp('^' + regexp(protocol(url))), '')
+    function host() {
+        var u = origin()
+            .replace(new RegExp('^' + regexp(protocol())), '')
             .replace(/^\/\//, '');
-        return url;
+        return u;
     }
 
-    function hostname(url) {
-        url = host(url)
-            .replace(new RegExp(':' + regexp(port(url)) + '$'), '');
-        return url;
+    function hostname() {
+        var u = host()
+            .replace(new RegExp(':' + regexp(port()) + '$'), '');
+        return u;
     }
 
-    function hash(url) {
+    function hash() {
         var matches = url.match(/#(?:[^\&]+)$/);
         return !!matches ? matches[0] : '';
     }
 
-    function origin(url) {
-        url = url
-            .replace(new RegExp(regexp(hash(url)) + '$'), '')
-            .replace(new RegExp(regexp(search(url)) + '$'), '')
-            .replace(new RegExp(regexp(pathname(url)) + '$'), '');
-        return url;
+    function origin() {
+        var u = url
+            .replace(new RegExp(regexp(hash()) + '$'), '')
+            .replace(new RegExp(regexp(search()) + '$'), '')
+            .replace(new RegExp(regexp(pathname()) + '$'), '');
+        return u;
     }
 
-    function search(url) {
-        url = url.replace(new RegExp(regexp(hash(url)) + '$'), '');
-        var matches = url.match(/\?.*/);
+    function search() {
+        var u = url.replace(new RegExp(regexp(hash()) + '$'), '');
+        var matches = u.match(/\?.*/);
         return !!matches ? matches[0] : '';
     }
 
-    function pathname(url) {
-        url = url
-            .replace(new RegExp(regexp(hash(url)) + '$'), '')
-            .replace(new RegExp(regexp(search(url)) + '$'), '');
-        var matches = url.match(/(?<=\/\/.*?)\/.+$/);
-        return  !!url ? (!!matches ? matches[0] : '/') : '';
+    function pathname() {
+        var u = url
+            .replace(new RegExp(regexp(hash()) + '$'), '')
+            .replace(new RegExp(regexp(search()) + '$'), '');
+        var matches = u.match(/(?<=\/\/.*?)\/.+$/);
+        return  !!u ? (!!matches ? matches[0] : '/') : '';
     }
 
-    function port(url) {
-        url = host(url);
-        var matches = url.match(/:([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/);
+    function port() {
+        var u = host();
+        var matches = u.match(/:([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])/);
         return !!matches ? matches[1] : '';
     }
 
@@ -96,8 +97,8 @@
         return str.replace(/([\$\(\)\*\+\.\[\?\\\^\{\|])/g, '\\$1');
     }
 
-    function url(url) {
-        url = (url || window.location).toString();
+    function JsUrl(input) {
+        url = (input || window.location).toString();
         url = decodeURIComponent(encodeURIComponent(url));
         if (!isURL(url)) {
             console.warn('[%s] is an invalid url.', url);
@@ -105,18 +106,18 @@
 
         return {
             url,
-            sub      : sub(url),
-            hash     : hash(url),
-            host     : host(url),
-            port     : port(url),
-            domain   : domain(url),
-            search   : search(url),
-            origin   : origin(url),
-            hostname : hostname(url),
-            pathname : pathname(url),
-            protocol : protocol(url)
+            sub,
+            hash,
+            host,
+            port,
+            domain,
+            search,
+            origin,
+            hostname,
+            pathname,
+            protocol
         }
     }
 
-    return url;
+    return JsUrl;
 })));
