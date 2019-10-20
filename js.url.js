@@ -19,7 +19,7 @@
         var suffixes = ['\.com','\.net','\.org','\.gov','\.mobi','\.info','\.biz','\.cc','\.tv','\.asia','\.me','\.travel','\.tel','\.name','\.co','\.so','\.fm','\.eu','\.edu','\.coop','\.pro','\.nu','\.io','\.as','\.club','\.im','\.zone','\.tk','\.ws','\.gs','\.re','\.rs','\.guru','\.ac','\.hr','\.su'];
         for (var i = 0, l = countries.length; i < l; i++) {
             var country = countries[i];
-            suffixes.push(country);
+            suffixes.push('\.' + country);
         }
         return new RegExp('([^\.]*)(' + suffixes.join('|') + ')$', 'mi')
     }
