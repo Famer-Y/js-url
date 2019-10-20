@@ -1,6 +1,6 @@
 /**
  * version : 1.0.2
- * author  : Famer-Y
+ * author  : Famer
  * github  : https://github.com/Famer-Y/js-url
  */
 ;(function (global, factory) {
